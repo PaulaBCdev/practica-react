@@ -1,54 +1,29 @@
-# React + TypeScript + Vite
+# PASOS DEL PROYECTO
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. AdvertsPage ("/" y "/adverts")
 
-Currently, two official plugins are available:
+   - Que llame bien a la api y se muestren los anuncios que ya haya en la api
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. LoginPage
 
-## Expanding the ESLint configuration
+   - Formulario
+   - Checkbox "Recordar contraseña"
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+3. AdvertsPage
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+   - Que sea una pagina protegida
+   - Si no hay anuncios, muestra enlace a NewAdvertPage
+   - Cada anuncio es un enlace a su pagina de detalle (AdvertPage)
+   - Si estas logeado, que salga un boton de Logout y te redirija a LoginPage
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+4. AdvertPage
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+   - Detalle del anuncio con foto si la hay
+   - Si no existe, redireccion a NotFoundPage
+   - Borrado del anuncio con confirmacion del usuario. Vuelta a "/"
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    "react-x": reactX,
-    "react-dom": reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs["recommended-typescript"].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
-```
+5. NewAdvertPage
+   - Formulario. Menos la foto, todos los campos son obligatorios
+   - Cuando se crea el anuncio, redirije a "/adverts"
+
+?. AdvertsPage - Filtros
