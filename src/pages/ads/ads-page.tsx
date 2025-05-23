@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+/* import { useEffect, useState } from "react";
 import type { AdvertType } from "./types";
-import { getLatestAdverts } from "./service";
+import { getLatestAdverts } from "./service"; */
 
 function AdsPage() {
-  const [ads, setAds] = useState<AdvertType[]>([]);
+  /* const [ads, setAds] = useState<AdvertType[]>([]);
 
   useEffect(() => {
     async function getAds() {
@@ -11,7 +11,7 @@ function AdsPage() {
       setAds(ads);
     }
     getAds();
-  }, []);
+  }, []); */
 
   return <div>Ads Main Page</div>;
 }
