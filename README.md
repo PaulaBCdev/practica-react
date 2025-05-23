@@ -2,8 +2,8 @@
 
 1. LoginPage
 
-   - Formulario
-   - Checkbox "Recordar contraseña" = Si esta chequeado, que se guarde token
+   - DONE Formulario
+   - DONE Checkbox "Recordar contraseña" = Si esta chequeado, que se guarde token
 
 2. AdvertsPage (se puede poner como lazy() y un Suspense con loader)
 
