@@ -8,7 +8,6 @@ export const login = async (credentials: Credentials, isChecked: boolean) => {
 
   if (isChecked) {
     storage.set("auth", accessToken);
-    console.log("is checked");
   }
 
   setAuthorizationHeader(accessToken);

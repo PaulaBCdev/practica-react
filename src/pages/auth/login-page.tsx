@@ -63,13 +63,16 @@ function LoginPage() {
         <button type="submit" className="login-btn" disabled={isDisabled}>
           Login
         </button>
-        <input
-          type="checkbox"
-          name="rememberMe"
-          id="rememberMe"
-          checked={isChecked}
-          onChange={handleCheck}
-        />
+        <div className="remember-me-check">
+          <input
+            type="checkbox"
+            name="rememberMe"
+            id="rememberMe"
+            checked={isChecked}
+            onChange={handleCheck}
+          />
+          <label>Remember me</label>
+        </div>
       </form>
       {error && (
         <div
