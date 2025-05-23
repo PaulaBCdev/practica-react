@@ -3,8 +3,11 @@ import FormField from "../../components/ui/form-field";
 import { login } from "./service";
 import { AxiosError } from "axios";
 import { useAuth } from "./context";
+import { useLocation, useNavigate } from "react-router";
 
 function LoginPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const { onLogin } = useAuth();
   const [credentials, setCredentials] = useState({
     email: "",
@@ -33,6 +36,9 @@ function LoginPage() {
     try {
       await login(credentials, isChecked);
       onLogin();
+
+      const to = location.state?.from ?? "/";
+      navigate(to, { replace: true });
     } catch (error) {
       if (error instanceof AxiosError) {
         setError({
