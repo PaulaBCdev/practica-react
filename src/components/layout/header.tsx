@@ -17,12 +17,12 @@ function Header() {
         </picture>
       </Link>
       <nav className="nav">
-        <input type="checkbox" id="menu-btn" name="menu-btn" />
+        {/* <input type="checkbox" id="menu-btn" name="menu-btn" />
         <label htmlFor="menu-btn" className="burguer-btn">
           <span></span>
           <span></span>
           <span></span>
-        </label>
+        </label> */}
 
         <ul className="nav-btns">
           <li>

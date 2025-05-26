@@ -1,8 +1,10 @@
 import { Outlet, Route, Routes } from "react-router";
-/* import AdsPage from "./pages/ads/ads-page"; */
 import LoginPage from "./pages/auth/login-page";
-import AdsPage from "./pages/ads/ads-page";
 import Layout from "./components/layout/layout";
+import { lazy } from "react";
+import RequireAuth from "./pages/auth/require-auth";
+
+const AdsPage = lazy(() => import("./pages/ads/ads-page"));
 
 function App() {
   return (
@@ -11,9 +13,11 @@ function App() {
       <Route
         path="/ads"
         element={
-          <Layout>
-            <Outlet />
-          </Layout>
+          <RequireAuth>
+            <Layout>
+              <Outlet />
+            </Layout>
+          </RequireAuth>
         }
       >
         <Route index element={<AdsPage />} />
