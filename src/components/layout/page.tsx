@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import "./page.css";
 
 interface PageProps {
   title: string;

@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import "./sell-buy-tag.css";
 
 interface SellBuyTagProps {
   className?: string;

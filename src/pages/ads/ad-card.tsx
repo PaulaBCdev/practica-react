@@ -1,3 +1,4 @@
+import "./ad-card.css";
 import Photo from "../../components/ui/photo";
 import SellBuyTag from "../../components/ui/sell-buy-tag";
 import type { AdvertType } from "./types";

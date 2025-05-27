@@ -1,3 +1,4 @@
+import "./ads-page.css";
 import { useEffect, useState } from "react";
 import type { AdvertType } from "./types";
 import { getLatestAdverts } from "./service";
@@ -8,7 +9,7 @@ import AdCard from "./ad-card";
 
 function EmptyList() {
   return (
-    <div>
+    <div className="ads-page-empty">
       <p>There are no adverts posted yet.</p>
       <p>Be the first one!</p>
       <Button>CREATE AD</Button>
