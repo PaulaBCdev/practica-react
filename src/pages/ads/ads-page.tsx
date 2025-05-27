@@ -4,6 +4,7 @@ import { getLatestAdverts } from "./service";
 import Page from "../../components/layout/page";
 import { Link } from "react-router";
 import Button from "../../components/ui/button";
+import AdCard from "./ad-card";
 
 function EmptyList() {
   return (
@@ -30,10 +31,13 @@ function AdsPage() {
   return (
     <Page title="">
       <section className="ads-page">
+        {/* show-products en la practica de frontend */}
         {ads.length ? (
           ads.map((ad) => (
             <li key={ad.id}>
-              <Link to={`/ads/${ad.id}`}>{ad.name}</Link>
+              <Link to={`/ads/${ad.id}`}>
+                <AdCard advert={ad} />
+              </Link>
             </li>
           ))
         ) : (

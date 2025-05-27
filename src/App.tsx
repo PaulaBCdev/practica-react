@@ -1,4 +1,4 @@
-import { Outlet, Route, Routes } from "react-router";
+import { Navigate, Outlet, Route, Routes } from "react-router";
 import LoginPage from "./pages/auth/login-page";
 import Layout from "./components/layout/layout";
 import { lazy } from "react";
@@ -11,7 +11,7 @@ function App() {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route
-        path="/ads"
+        path="/adverts"
         element={
           <RequireAuth>
             <Layout>
@@ -21,7 +21,10 @@ function App() {
         }
       >
         <Route index element={<AdsPage />} />
+        {/* <Route path=":id" element={<AdvertPage />} /> */}
+        {/* <Route path="new" element={<NewAdvertPage />} /> */}
       </Route>
+      <Route path="/" element={<Navigate to="/adverts" />} />
     </Routes>
   );
 }
