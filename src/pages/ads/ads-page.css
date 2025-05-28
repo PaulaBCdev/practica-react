@@ -1,14 +1,8 @@
 .ads-page {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   justify-content: center;
   gap: 2rem;
-}
-
-@media (min-width: 768px) {
-  .ads-page {
-    grid-template-columns: repeat(4, 1fr);
-  }
 }
 
 .ads-page-empty {
