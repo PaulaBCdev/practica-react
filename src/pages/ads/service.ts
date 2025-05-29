@@ -9,3 +9,8 @@ export const getLatestAdverts = async () => {
   const response = await client.get<AdvertType[]>(url);
   return response.data;
 };
+
+export const getTags = async () => {
+  const response = await client.get("/api/v1/adverts/tags");
+  return response.data;
+};

@@ -1,7 +1,7 @@
 import "./ads-page.css";
 import { useEffect, useState, type ChangeEvent } from "react";
-import type { AdvertType } from "./types";
-import { getLatestAdverts } from "./service";
+import type { FiltersType, AdvertType } from "./types";
+import { getLatestAdverts, getTags } from "./service";
 import Page from "../../components/layout/page";
 import { Link } from "react-router";
 import Button from "../../components/ui/button";
@@ -22,46 +22,121 @@ function EmptyList() {
 function AdsPage() {
   const [ads, setAds] = useState<AdvertType[]>([]);
 
-  const [price, setPrice] = useState("0");
+  //FILTERS STATES
+
+  const [appliedFilters, setAppliedFilters] = useState<FiltersType>({});
+
+  const [nameInput, setNameInput] = useState("");
+
+  const [selectedSaleInput, setSelectedSaleInput] = useState("");
+
+  const [priceInput, setPriceInput] = useState("0");
   const [maxPrice, setMaxPrice] = useState("5000");
+
+  const [tags, setTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   useEffect(() => {
     async function getAds() {
       const ads = await getLatestAdverts();
-      console.log(ads);
       setAds(ads);
 
-      //price input
+      //price filter
       let maxPrice = 0;
       ads.forEach((ad) => {
         if (ad.price > maxPrice) {
           maxPrice = ad.price;
         }
       });
-      setPrice(maxPrice.toString());
+      setPriceInput(maxPrice.toString());
       setMaxPrice(maxPrice.toString());
+
+      //tags filter
+      const tags = await getTags();
+      setTags(tags);
     }
     getAds();
   }, []);
 
+  const handleChangeName = (event: ChangeEvent<HTMLInputElement>) => {
+    setNameInput(event.target.value);
+  };
+
+  const handleChangeSale = (event: ChangeEvent<HTMLInputElement>) => {
+    setSelectedSaleInput(event.target.value);
+  };
+
   const handleChangePrice = (event: ChangeEvent<HTMLInputElement>) => {
-    setPrice(event.target.value);
+    setPriceInput(event.target.value);
+  };
+
+  function handleCheckTags(event: ChangeEvent<HTMLInputElement>) {
+    if (event.target.checked) {
+      setSelectedTags([...selectedTags, event.target.value]);
+    } else {
+      const newSelected = [...selectedTags].filter(
+        (tag) => tag !== event.target.value,
+      );
+      setSelectedTags(newSelected);
+    }
+  }
+
+  const handleApplyFilters = () => {
+    const newFilters: FiltersType = {};
+    if (nameInput) {
+      newFilters.name = nameInput;
+    }
+    if (selectedSaleInput) {
+      if (selectedSaleInput === "sell") {
+        newFilters.sale = true;
+      } else {
+        newFilters.sale = false;
+      }
+    }
+    if (priceInput) {
+      newFilters.price = [0, parseInt(priceInput)];
+    }
+    if (selectedTags) {
+      newFilters.tags = selectedTags;
+    }
+
+    setAppliedFilters(newFilters);
   };
 
   return (
     <Page title="">
       <section className="ads-filter">
         <form>
-          <FormField label="Name" type="text" />
+          <FormField
+            label="Name"
+            type="text"
+            name="name"
+            value={nameInput}
+            onChange={handleChangeName}
+          />
 
           <div className="sale-filter">
             <div>
               <label htmlFor="sell">Sell</label>
-              <input type="radio" id="sell" name="sale" />
+              <input
+                type="radio"
+                id="sell"
+                name="sale"
+                value="sell"
+                checked={selectedSaleInput === "sell"}
+                onChange={handleChangeSale}
+              />
             </div>
             <div>
               <label htmlFor="buy">Buy</label>
-              <input type="radio" id="buy" name="sale" />
+              <input
+                type="radio"
+                id="buy"
+                name="sale"
+                value="buy"
+                checked={selectedSaleInput === "buy"}
+                onChange={handleChangeSale}
+              />
             </div>
           </div>
 
@@ -70,14 +145,39 @@ function AdsPage() {
               type="range"
               min="0"
               max={maxPrice}
-              value={price}
+              value={priceInput}
               className="slider"
               id="price-slider"
               onChange={handleChangePrice}
             />
-            <label htmlFor="price-slider">Price range: 0 - {price}</label>
+            <label htmlFor="price-slider">Price range: 0 - {priceInput}</label>
           </div>
+
+          <div className="tags-filter">
+            {tags.map((tag) => {
+              return (
+                <div className="tag" key={tag}>
+                  <input
+                    type="checkbox"
+                    name={tag}
+                    id={tag}
+                    value={tag}
+                    checked={selectedTags.includes(tag)}
+                    onChange={handleCheckTags}
+                  />
+                  <label htmlFor={tag}>{tag}</label>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* <Button className="delete-filters-btn" onClick={handleDeleteFilters}>
+            DELETE FILTERS
+          </Button> */}
         </form>
+        <Button className="apply-filters-btn" onClick={handleApplyFilters}>
+          APPLY FILTERS
+        </Button>
       </section>
       <section className="ads-page">
         {ads.length ? (
