@@ -3,14 +3,20 @@ import { useEffect, useState, type ChangeEvent } from "react";
 import type { FiltersType, AdvertType } from "./types";
 import { getLatestAdverts, getTags } from "./service";
 import Page from "../../components/layout/page";
-import { Link } from "react-router";
 import Button from "../../components/ui/button";
-import AdCard from "./ad-card";
-import Filters from "./filters";
 import FormField from "../../components/ui/form-field";
+import AdsList from "../../components/ui/ads-list";
 
-function EmptyList() {
-  return (
+interface Props {
+  areFilters: boolean;
+}
+
+function EmptyList({ areFilters }: Props) {
+  return areFilters ? (
+    <div className="no-filter-matches">
+      There are no ads matching your search.
+    </div>
+  ) : (
     <div className="ads-page-empty">
       <p>There are no adverts posted yet.</p>
       <p>Be the first one!</p>
@@ -21,6 +27,7 @@ function EmptyList() {
 
 function AdsPage() {
   const [ads, setAds] = useState<AdvertType[]>([]);
+  const [showingAds, setShowingAds] = useState<AdvertType[]>([]);
 
   //FILTERS STATES
 
@@ -40,6 +47,7 @@ function AdsPage() {
     async function getAds() {
       const ads = await getLatestAdverts();
       setAds(ads);
+      setShowingAds(ads);
 
       //price filter
       let maxPrice = 0;
@@ -99,9 +107,45 @@ function AdsPage() {
     if (selectedTags) {
       newFilters.tags = selectedTags;
     }
-
     setAppliedFilters(newFilters);
   };
+
+  const handleDeleteFilters = () => {
+    setAppliedFilters({});
+  };
+
+  useEffect(() => {
+    const applyFilters = () => {
+      const filteredAds = ads.filter((ad) => {
+        const nameMatches = !!appliedFilters.name
+          ? ad.name.toLowerCase().startsWith(appliedFilters.name.toLowerCase())
+          : true;
+        const priceMatches = !!appliedFilters.price
+          ? appliedFilters.price[0] <= ad.price &&
+            ad.price <= appliedFilters.price[1]
+          : true;
+        const saleMatches =
+          appliedFilters.sale !== undefined
+            ? ad.sale === appliedFilters.sale
+            : true;
+        let tagsMatches = true;
+        !!appliedFilters.tags?.length &&
+          appliedFilters.tags.forEach((tag) => {
+            if (!ad.tags.includes(tag)) tagsMatches = false;
+          });
+
+        return nameMatches && priceMatches && saleMatches && tagsMatches;
+      });
+      setShowingAds(filteredAds);
+    };
+    applyFilters();
+  }, [appliedFilters]);
+
+  const isFiltering =
+    appliedFilters.name !== undefined ||
+    appliedFilters.price !== undefined ||
+    appliedFilters.sale !== undefined ||
+    appliedFilters.tags !== undefined;
 
   return (
     <Page title="">
@@ -170,26 +214,19 @@ function AdsPage() {
               );
             })}
           </div>
-
-          {/* <Button className="delete-filters-btn" onClick={handleDeleteFilters}>
-            DELETE FILTERS
-          </Button> */}
         </form>
         <Button className="apply-filters-btn" onClick={handleApplyFilters}>
           APPLY FILTERS
         </Button>
+        <Button className="delete-filters-btn" onClick={handleDeleteFilters}>
+          DELETE FILTERS
+        </Button>
       </section>
       <section className="ads-page">
-        {ads.length ? (
-          ads.map((ad) => (
-            <li key={ad.id}>
-              <Link to={`/ads/${ad.id}`}>
-                <AdCard advert={ad} />
-              </Link>
-            </li>
-          ))
+        {!showingAds.length ? (
+          <EmptyList areFilters={isFiltering} />
         ) : (
-          <EmptyList />
+          <AdsList list={showingAds} />
         )}
       </section>
     </Page>
