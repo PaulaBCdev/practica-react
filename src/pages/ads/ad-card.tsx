@@ -2,6 +2,7 @@ import "./ad-card.css";
 import Photo from "../../components/ui/photo";
 import SellBuyTag from "../../components/ui/sell-buy-tag";
 import type { AdvertType } from "./types";
+import TagsList from "../../components/ui/tags-list";
 
 interface AdCardProps {
   advert: AdvertType;
@@ -24,13 +25,7 @@ const AdCard = ({ advert }: AdCardProps) => {
         </p>
       </div>
 
-      <div className="ad-tags">
-        {tags.map((tag) => (
-          <span key={tag} className="tag">
-            {tag}
-          </span>
-        ))}
-      </div>
+      <TagsList tags={tags} />
     </article>
   );
 };

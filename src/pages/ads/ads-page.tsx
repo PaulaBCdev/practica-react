@@ -1,11 +1,12 @@
 import "./ads-page.css";
-import { useEffect, useState, type ChangeEvent } from "react";
+import { lazy, useEffect, useState, type ChangeEvent } from "react";
 import type { FiltersType, AdvertType } from "./types";
 import { getLatestAdverts, getTags } from "./service";
 import Page from "../../components/layout/page";
 import Button from "../../components/ui/button";
 import FormField from "../../components/ui/form-field";
-import AdsList from "../../components/ui/ads-list";
+
+const AdsList = lazy(() => import("./ads-list"));
 
 interface Props {
   areFilters: boolean;
@@ -25,7 +26,7 @@ function EmptyList({ areFilters }: Props) {
   );
 }
 
-function AdsPage() {
+function AdvertsPage() {
   const [ads, setAds] = useState<AdvertType[]>([]);
   const [showingAds, setShowingAds] = useState<AdvertType[]>([]);
 
@@ -150,71 +151,70 @@ function AdsPage() {
   return (
     <Page title="">
       <section className="ads-filter">
-        <form>
-          <FormField
-            label="Name"
-            type="text"
-            name="name"
-            value={nameInput}
-            onChange={handleChangeName}
-          />
+        <FormField
+          label="Name"
+          type="text"
+          name="name"
+          value={nameInput}
+          onChange={handleChangeName}
+        />
 
-          <div className="sale-filter">
-            <div>
-              <label htmlFor="sell">Sell</label>
-              <input
-                type="radio"
-                id="sell"
-                name="sale"
-                value="sell"
-                checked={selectedSaleInput === "sell"}
-                onChange={handleChangeSale}
-              />
-            </div>
-            <div>
-              <label htmlFor="buy">Buy</label>
-              <input
-                type="radio"
-                id="buy"
-                name="sale"
-                value="buy"
-                checked={selectedSaleInput === "buy"}
-                onChange={handleChangeSale}
-              />
-            </div>
-          </div>
-
-          <div className="price-filter">
+        <div className="sale-filter">
+          <div>
+            <label htmlFor="sell">Sell</label>
             <input
-              type="range"
-              min="0"
-              max={maxPrice}
-              value={priceInput}
-              className="slider"
-              id="price-slider"
-              onChange={handleChangePrice}
+              type="radio"
+              id="sell"
+              name="sale"
+              value="sell"
+              checked={selectedSaleInput === "sell"}
+              onChange={handleChangeSale}
             />
-            <label htmlFor="price-slider">Price range: 0 - {priceInput}</label>
           </div>
+          <div>
+            <label htmlFor="buy">Buy</label>
+            <input
+              type="radio"
+              id="buy"
+              name="sale"
+              value="buy"
+              checked={selectedSaleInput === "buy"}
+              onChange={handleChangeSale}
+            />
+          </div>
+        </div>
 
-          <div className="tags-filter">
-            {tags.map((tag) => {
-              return (
-                <div className="tag" key={tag}>
-                  <input
-                    type="checkbox"
-                    name={tag}
-                    id={tag}
-                    value={tag}
-                    checked={selectedTags.includes(tag)}
-                    onChange={handleCheckTags}
-                  />
-                  <label htmlFor={tag}>{tag}</label>
-                </div>
-              );
-            })}
-          </div>
-        </form>
+        <div className="price-filter">
+          <input
+            type="range"
+            min="0"
+            max={maxPrice}
+            value={priceInput}
+            className="slider"
+            id="price-slider"
+            onChange={handleChangePrice}
+          />
+          <label htmlFor="price-slider">Price range: 0 - {priceInput}</label>
+        </div>
+
+        <div className="tags-filter">
+          {tags.map((tag) => {
+            return (
+              <div className="tag" key={tag}>
+                <input
+                  type="checkbox"
+                  name={tag}
+                  id={tag}
+                  value={tag}
+                  checked={selectedTags.includes(tag)}
+                  onChange={handleCheckTags}
+                />
+                <label htmlFor={tag}>{tag}</label>
+              </div>
+            );
+          })}
+        </div>
+
         <Button className="apply-filters-btn" onClick={handleApplyFilters}>
           APPLY FILTERS
         </Button>
@@ -233,4 +233,4 @@ function AdsPage() {
   );
 }
 
-export default AdsPage;
+export default AdvertsPage;

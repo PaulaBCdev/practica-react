@@ -8,3 +8,7 @@
 .ads-page-empty {
   text-align: center;
 }
+
+.adCard {
+  cursor: pointer;
+}
