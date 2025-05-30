@@ -8,6 +8,14 @@ export interface AdvertType {
   photo: string | null;
 }
 
+export interface UploadAdvertType {
+  name: string;
+  sale: boolean;
+  price: number;
+  tags: string[];
+  photo?: string;
+}
+
 export interface FiltersType {
   name?: string;
   sale?: boolean;

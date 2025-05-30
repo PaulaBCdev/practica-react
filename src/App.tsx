@@ -6,6 +6,7 @@ import AdvertsPage from "./pages/ads/ads-page";
 import { Suspense } from "react";
 import LoadingSpinner from "./components/ui/loader";
 import AdvertPage from "./pages/ads/ad-page";
+import NewAdvertPage from "./pages/ads/new-ad-page";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
         >
           <Route index element={<AdvertsPage />} />
           <Route path=":id" element={<AdvertPage />} />
-          {/* <Route path="new" element={<NewAdvertPage />} /> */}
+          <Route path="new" element={<NewAdvertPage />} />
         </Route>
         <Route path="/" element={<Navigate to="/adverts" />} />
       </Routes>

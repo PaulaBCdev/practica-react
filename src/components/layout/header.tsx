@@ -26,7 +26,7 @@ function Header() {
 
         <ul className="nav-btns">
           <li>
-            <NavLink className="nav-btn" to="/ads/new">
+            <NavLink className="nav-btn" to="/adverts/new">
               CREATE AD
             </NavLink>
           </li>

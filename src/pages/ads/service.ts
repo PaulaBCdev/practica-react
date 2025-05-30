@@ -23,3 +23,11 @@ export const getAdvert = async (id: string) => {
 export const deleteAdvert = async (id: string) => {
   await client.delete(`${ADVERTS_URL}/${id}`);
 };
+
+export const createAdvert = async (ad: FormData) => {
+  const response = await client.post<AdvertType>(ADVERTS_URL, ad, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  console.log(response.data);
+  return response.data;
+};

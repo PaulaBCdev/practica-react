@@ -3,3 +3,10 @@
   color: #2c2c2c;
   padding: 3em;
 }
+
+.layout-title {
+  font-size: 45px;
+  font-weight: bold;
+  color: #ff4f8b;
+  text-align: center;
+}
