@@ -1,9 +1,12 @@
+import "./login-page.css";
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import FormField from "../../components/ui/form-field";
 import { login } from "./service";
 import { AxiosError } from "axios";
 import { useAuth } from "./context";
 import { useLocation, useNavigate } from "react-router";
+import Page from "../../components/layout/page";
+import Button from "../../components/ui/button";
 
 function LoginPage() {
   const location = useLocation();
@@ -49,49 +52,54 @@ function LoginPage() {
   }
 
   return (
-    <div className="login-page">
-      <h1 className="login-page-title">Login</h1>
-      <form onSubmit={handleSubmit}>
-        <FormField
-          label="Email"
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleChange}
-        />
-        <FormField
-          label="Password"
-          type="password"
-          name="password"
-          value={password}
-          onChange={handleChange}
-        />
-        <button type="submit" className="login-btn" disabled={isDisabled}>
-          Login
-        </button>
-        <div className="remember-me-check">
-          <input
-            type="checkbox"
-            name="rememberMe"
-            id="rememberMe"
-            checked={isChecked}
-            onChange={handleCheck}
+    <Page title="Login">
+      <div className="login-page">
+        <form className="login-form" onSubmit={handleSubmit}>
+          <FormField
+            label="Email"
+            classNameLabel="login-label"
+            classNameInput="login-input"
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleChange}
           />
-          <label>Remember me</label>
-        </div>
-      </form>
-      {error && (
-        <div
-          className="login-error"
-          role="alert"
-          onClick={() => {
-            setError(null);
-          }}
-        >
-          {error.message}
-        </div>
-      )}
-    </div>
+          <FormField
+            label="Password"
+            classNameLabel="login-label"
+            classNameInput="login-input"
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+          />
+          <Button type="submit" className="login-btn" disabled={isDisabled}>
+            Login
+          </Button>
+          <div className="remember-me-check">
+            <input
+              type="checkbox"
+              name="rememberMe"
+              id="rememberMe"
+              checked={isChecked}
+              onChange={handleCheck}
+            />
+            <label>Remember me</label>
+          </div>
+        </form>
+        {error && (
+          <div
+            className="login-error"
+            role="alert"
+            onClick={() => {
+              setError(null);
+            }}
+          >
+            {error.message}
+          </div>
+        )}
+      </div>
+    </Page>
   );
 }
 

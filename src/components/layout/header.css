@@ -15,57 +15,6 @@
   }
 
   .nav {
-    /* Hide chackbox */
-    /* #menu-btn {
-      display: none;
-    } */
-
-    /* Hamburguer menu design */
-    /* .burguer-btn {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    } */
-
-    /* .burguer-btn span {
-      width: 30px;
-      height: 4px;
-      background: var(--main-text-color);
-      border-radius: 2px;
-    } */
-
-    /* .nav-btns {
-      opacity: 0;
-      flex-direction: column;
-      position: absolute;
-      right: 0;
-      top: 99%;
-      margin: 0;
-      background: var(--secondary-color);
-      width: 50vw;
-      padding: 10px;
-      border-bottom-left-radius: 4px;
-      transform: translateY(-10px);
-      transition:
-        opacity 0.3s ease-in-out,
-        transform 0.3s ease-in-out;
-      pointer-events: none;
-      list-style-type: none;
-    } */
-
-    /* .nav-btn {
-      color: var(--text-color);
-      text-decoration: none;
-      font-size: 18px;
-    } */
-
-    /* #menu-btn:checked + .burguer-btn + .session {
-      display: flex;
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    } */
-
     .nav-btns {
       list-style-type: none;
       padding: 0;
