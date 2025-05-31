@@ -1,3 +1,4 @@
+import "./new-ad-page.css";
 import {
   useEffect,
   useRef,
@@ -91,6 +92,8 @@ const NewAdvertPage = () => {
         <div className="form-element">
           <FormField
             label="Product name"
+            classNameLabel="form-label"
+            classNameInput="form-input"
             type="text"
             name="product-name"
             value={nameInput}
@@ -102,6 +105,8 @@ const NewAdvertPage = () => {
         <div className="form-element">
           <FormField
             label="Price(€)"
+            classNameLabel="form-label"
+            classNameInput="form-input"
             type="number"
             name="product-price"
             value={priceInput}
@@ -111,9 +116,9 @@ const NewAdvertPage = () => {
         </div>
 
         <fieldset className="field type-field">
-          <label>Ad type</label>
+          <label className="fieldset-label">Ad type</label>
           <div className="types">
-            <div className="sell-type">
+            <div className="type-option">
               <input
                 type="radio"
                 name="ad-type"
@@ -128,7 +133,7 @@ const NewAdvertPage = () => {
               </label>
             </div>
 
-            <div className="buy-type">
+            <div className="type-option">
               <input
                 type="radio"
                 name="ad-type"
@@ -146,32 +151,36 @@ const NewAdvertPage = () => {
         </fieldset>
 
         <fieldset className="field tags-field">
-          <label>Tags</label>
-          {tags.map((tag) => {
-            return (
-              <div className="tag" key={tag}>
-                <input
-                  type="checkbox"
-                  name={tag}
-                  id={tag}
-                  value={tag}
-                  checked={selectedTagsInput.includes(tag)}
-                  onChange={handleChangeTags}
-                />
-                <label htmlFor={tag}>{tag}</label>
-              </div>
-            );
-          })}
+          <label className="fieldset-label">Tags</label>
+          <div className="tag-options">
+            {tags.map((tag) => {
+              return (
+                <div className="tag" key={tag}>
+                  <input
+                    type="checkbox"
+                    name={tag}
+                    id={tag}
+                    value={tag}
+                    checked={selectedTagsInput.includes(tag)}
+                    onChange={handleChangeTags}
+                  />
+                  <label htmlFor={tag}>{tag}</label>
+                </div>
+              );
+            })}
+          </div>
         </fieldset>
 
         <div className="file-container">
           <label className="upload-img-label">Upload image</label>
-          <input
-            type="file"
-            name="product-img"
-            id="product-img"
-            ref={fileRef}
-          />
+          <div className="upload-img-container">
+            <input
+              type="file"
+              name="product-img"
+              id="product-img"
+              ref={fileRef}
+            />
+          </div>
         </div>
         <Button type="submit" className="form-btn" disabled={isDisabled}>
           Create
