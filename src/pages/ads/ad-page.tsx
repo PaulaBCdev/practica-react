@@ -79,10 +79,12 @@ function AdvertPage() {
               </div>
             </div>
 
-            <TagsList tags={ad.tags} className="ad-tags-list" />
-          </div>
-          <div className="trash-container">
-            <TrashButton showConfirm={handleShowConfirm} />
+            <div className="tags-trash">
+              <TagsList tags={ad.tags} className="ad-tags-list" />
+              <div className="trash-container">
+                <TrashButton showConfirm={handleShowConfirm} />
+              </div>
+            </div>
           </div>
         </div>
       ) : (
