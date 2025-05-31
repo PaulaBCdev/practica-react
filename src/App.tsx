@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import LoadingSpinner from "./components/ui/loader";
 import AdvertPage from "./pages/ads/ad-page";
 import NewAdvertPage from "./pages/ads/new-ad-page";
+import NotFoundPage from "./pages/error-pages/not-found-page";
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
           <Route path="new" element={<NewAdvertPage />} />
         </Route>
         <Route path="/" element={<Navigate to="/adverts" />} />
+        <Route path="/NotFoundPage" element={<NotFoundPage />} />
+        <Route path="*" element={<Navigate to="/NotFoundPage" />} />
       </Routes>
     </Suspense>
   );
