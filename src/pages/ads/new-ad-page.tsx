@@ -1,4 +1,10 @@
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from "react";
 import Page from "../../components/layout/page";
 import FormField from "../../components/ui/form-field";
 import { createAdvert, getTags } from "./service";
@@ -12,6 +18,7 @@ const NewAdvertPage = () => {
   const [selectedTypeInput, setSelectedTypeInput] = useState("");
   const [tags, setTags] = useState([]);
   const [selectedTagsInput, setSelectedTagsInput] = useState<string[]>([]);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const isDisabled =
     !nameInput ||
@@ -60,6 +67,10 @@ const NewAdvertPage = () => {
     adToUpload.append("sale", selectedTypeInput === "sell" ? "true" : " false");
     adToUpload.append("price", String(priceInput));
     selectedTagsInput.forEach((tag) => adToUpload.append("tags", tag));
+    const file = fileRef.current?.files?.[0];
+    if (file) {
+      adToUpload.append("photo", file);
+    }
 
     try {
       const createdAd = await createAdvert(adToUpload);
@@ -154,7 +165,13 @@ const NewAdvertPage = () => {
         </fieldset>
 
         <div className="file-container">
-          <p>Aqui va una fotico</p>
+          <label className="upload-img-label">Upload image</label>
+          <input
+            type="file"
+            name="product-img"
+            id="product-img"
+            ref={fileRef}
+          />
         </div>
         <Button type="submit" className="form-btn" disabled={isDisabled}>
           Create
